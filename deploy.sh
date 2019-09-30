@@ -11,6 +11,24 @@ RESTART_ARGS=
 
 set -x
 
+
+if hash ruby 2>/dev/null; then
+    echo "ruby is found"
+else
+    yum install -y ruby
+fi
+
+if hash aws-cli 2>/dev/null; then
+    echo "aws-cli is found"
+else
+    yum install -y aws-cli
+fi
+
+cd /home/ec2-user
+aws s3 cp s3://aws-codedeploy-us-east-2/latest/install . --region us-east-2
+chmod +x ./install
+./install auto
+
 if hash git 2>/dev/null; then
     echo "git is  found"
 else
